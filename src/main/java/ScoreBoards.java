@@ -17,15 +17,15 @@ public class ScoreBoards {
         return new ScoreBoards(scoreBoards);
     }
 
-    public void record(Player player, int currentTurn, RollResult rollResult) {
-        this.scoreBoards.get(player).record(currentTurn, rollResult);
+    public void record(Player player, int currentTurn, RollResults rollResults) {
+        this.scoreBoards.get(player).record(currentTurn, rollResults);
     }
 
-    public int getCurrentScore(Player player, int currentTurn) {
-        return scoreBoards.get(player).getCurrentScore(currentTurn);
+    public RollResults getRollResults(Player player, int currentTurn) {
+        return this.scoreBoards.get(player).getRollResults(currentTurn);
     }
 
-    public RollResult getRollResult(Player player, int currentTurn) {
-        return scoreBoards.get(player).getRollResult(currentTurn);
+    public int getRoundScore(int currentTurn, Player player) {
+        return this.scoreBoards.get(player).calculateRoundScore(currentTurn);
     }
 }

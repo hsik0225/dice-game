@@ -40,19 +40,24 @@ class DiceGameControllerTest {
         final Executable executable = () -> {
             try (MockedStatic<Randoms> randoms = mockStatic(Randoms.class);
                  MockedStatic<Console> console = mockStatic(Console.class)) {
-                console.when(Console::readLine).thenReturn("포츈,조이,시드", "2");
+                console.when(Console::readLine).thenReturn("포츈,조이", "2");
 
                 randoms.when(() -> Randoms.pickNumberInRange(anyInt(), anyInt())).thenReturn(
 
-                        // 1 Turn
+                        // 포츈 - 1 Turn
                         1, 2,
-                        2, 3,
+                        4, 5,
                         6, 6,
 
-                        // 2 Turn
+                        // 조이 - 1 Turn
+                        2, 3,
+                        2, 2,
+
+                        // 포츈 - 1 Turn
                         1, 1,
-                        5, 6,
-                        1, 2
+
+                        // 조이 - 1 Turn
+                        4, 4
                 );
 
                 DiceGameController.main(new String[]{});
@@ -61,7 +66,7 @@ class DiceGameControllerTest {
 
         // then
         assertSimpleTest(executable);
-        assertThat(getOutput()).isEqualTo(
+        assertThat(getOutput()).contains(
                 "플레이어 이름을 입력해주세요.\n" +
                         "\n" +
                         "턴을 입력해주세요.\n" +
@@ -70,30 +75,47 @@ class DiceGameControllerTest {
                         "주사위 결과 : 1, 2\n" +
                         "현재까지 얻은 점수 : 3\n" +
                         "\n" +
+                        "주사위 결과 : 4, 5\n" +
+                        "현재까지 얻은 점수 : 12\n" +
+                        "\n" +
+                        "주사위 결과 : 6, 6\n" +
+                        "현재까지 얻은 점수 : 24\n" +
+                        "\n" +
+                        "---\n" +
+                        "\n" +
                         "조이의 차례입니다.\n" +
                         "주사위 결과 : 2, 3\n" +
                         "현재까지 얻은 점수 : 5\n" +
                         "\n" +
-                        "시드의 차례입니다.\n" +
-                        "주사위 결과 : 6, 6\n" +
-                        "현재까지 얻은 점수 : 0\n" +
+                        "주사위 결과 : 2, 2\n" +
+                        "현재까지 얻은 점수 : 9\n" +
+                        "\n" +
+                        "---\n" +
                         "\n" +
                         "포츈의 차례입니다.\n" +
                         "주사위 결과 : 1, 1\n" +
-                        "현재까지 얻은 점수 : 3\n" +
+                        "현재까지 얻은 점수 : 26\n" +
+                        "\n" +
+                        "---\n" +
                         "\n" +
                         "조이의 차례입니다.\n" +
-                        "주사위 결과 : 5, 6\n" +
-                        "현재까지 얻은 점수 : 16\n" +
+                        "주사위 결과 : 4, 4\n" +
+                        "현재까지 얻은 점수 : 17\n" +
                         "\n" +
-                        "시드의 차례입니다.\n" +
-                        "주사위 결과 : 1, 2\n" +
-                        "현재까지 얻은 점수 : 3\n" +
+                        "---\n" +
+                        "\n" +
+                        "결과\n" +
+                        "1라운드\n" +
+                        "포츈 : 24\n" +
+                        "조이 : 9\n" +
+                        "\n" +
+                        "2라운드\n" +
+                        "포츈 : 2\n" +
+                        "조이 : 8\n" +
                         "\n" +
                         "총 점수\n" +
-                        "포츈 : 3 점\n" +
-                        "조이 : 16 점\n" +
-                        "시드 : 3 점"
+                        "포츈 : 26\n" +
+                        "조이 : 17"
         );
     }
 

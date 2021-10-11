@@ -28,6 +28,19 @@ public class Player {
         return score;
     }
 
+    public RollResults rollDiceWhileSameNumber(int dieCount) {
+        RollResults rollResults = new RollResults();
+        while (true) {
+            final RollResult result = roll(dieCount);
+            rollResults.add(result);
+
+            if (result.isSameNumber()) {
+                break;
+            }
+        }
+        return rollResults;
+    }
+
     public RollResult roll(int dieCount) {
         final List<Integer> results = rollDiceCountTimes(dieCount);
         score += calculateScore(results);
@@ -42,11 +55,6 @@ public class Player {
     }
 
     private int calculateScore(List<Integer> results) {
-        final Integer any = results.get(0);
-        if (results.stream().allMatch(result -> result.equals(any))) {
-            return 0;
-        }
-
         return results.stream()
                       .mapToInt(Integer::intValue)
                       .sum();

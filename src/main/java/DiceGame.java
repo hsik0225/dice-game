@@ -19,9 +19,9 @@ public class DiceGame {
     public ScoreBoards run() {
         while (turn.isLessOrEqualThanTotal()) {
             final Player currentPlayer = players.findCurrentPlayer();
-            final RollResult rollResult = currentPlayer.roll(DIE_COUNT);
+            final RollResults rollResults = currentPlayer.rollDiceWhileSameNumber(DIE_COUNT);
             final int currentTurn = turn.getCurrentTurn();
-            scoreBoards.record(currentPlayer, currentTurn, rollResult);
+            scoreBoards.record(currentPlayer, currentTurn, rollResults);
 
             players.moveCursorToNextPlayer();
             if (players.allRolled()) {

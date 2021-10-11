@@ -3,25 +3,25 @@ import java.util.Map;
 
 public class ScoreBoard {
 
-    private final Map<Integer, RollResult> scores;
+    private final Map<Integer, RollResults> scores;
 
     public ScoreBoard() {
         this(new HashMap<>());
     }
 
-    public ScoreBoard(Map<Integer, RollResult> scores) {
+    public ScoreBoard(Map<Integer, RollResults> scores) {
         this.scores = scores;
     }
 
-    public void record(int turn, RollResult result) {
-        this.scores.put(turn, result);
+    public void record(int turn, RollResults results) {
+        this.scores.put(turn, results);
     }
 
-    public int getCurrentScore(int currentTurn) {
-        return scores.get(currentTurn).getScore();
+    public RollResults getRollResults(int turn) {
+        return scores.get(turn);
     }
 
-    public RollResult getRollResult(int currentTurn) {
-        return scores.get(currentTurn);
+    public int calculateRoundScore(int turn) {
+        return getRollResults(turn).calculateRoundScore();
     }
 }

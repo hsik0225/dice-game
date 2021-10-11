@@ -7,5 +7,7 @@ public class DiceGameController {
         final ScoreBoards scoreBoards = diceGame.run();
 
         OutputView.printScores(totalTurn, players, scoreBoards);
+        OutputView.printRoundResult(totalTurn, players, scoreBoards);
+        OutputView.printTotalScore(players);
     }
 }
